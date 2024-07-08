@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace DataContext.Abstract
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : class
     {
-        List<T> GetAllDatas();
         T GetByData(Expression<Func<T, bool>> expression);
-        void Add(T data);
-        void Update(T data);
-        void Delete(int id);
+        List<T> GetAllDatas();
+        void Add(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
+
 }

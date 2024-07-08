@@ -1,11 +1,14 @@
 using DataContext;
+using DataContext.Abstract;
+using DataContext.Concrete;
+using Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContextDb>();
-
+builder.Services.AddScoped(typeof(IRepository<BaseEntity>), typeof(Repository));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

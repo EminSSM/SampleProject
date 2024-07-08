@@ -1,0 +1,31 @@
+﻿@using Entities
+
+@model Register
+
+<form asp-controller="Home" asp-action="Register" method="post">
+    <div class="mb-3">
+        <label class="form-label">Adı</label>
+        <input type="text" class="form-control" asp-for="@Model.FirstName">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Soyadı</label>
+        <input type="text" class="form-control" asp-for="@Model.LastName">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="@Model.Email">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Telefon Numarası</label>
+        <input type="text" class="form-control" asp-for="@Model.PhoneNumber">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Şifre</label>
+        <input type="text" class="form-control" asp-for="@Model.PasswordHash">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Profil Resmi Yükle</label>
+        <input type="text" class="form-control" asp-for="@Model.ProfilePicture">
+    </div>
+    <button type="submit" class="btn btn-primary">Gönder</button>
+</form>

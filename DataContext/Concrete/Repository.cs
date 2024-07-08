@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataContext.Concrete
 {
-    public class Repository : IRepository<BaseEntity>
+    public class Repository : IRepository<BaseEntity> 
     {
         private readonly ContextDb _contextDb;
 
@@ -22,14 +22,17 @@ namespace DataContext.Concrete
         public void Add(BaseEntity data)
         {
             _contextDb.Add(data);
-            _contextDb.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var entity = GetByData(x=>x.Id==id);
             _contextDb.Remove(entity);
-            _contextDb.SaveChanges();
+        }
+
+        public void Delete(BaseEntity entity)
+        {
+            throw new NotImplementedException();
         }
 
         public List<BaseEntity> GetAllDatas()
@@ -45,7 +48,6 @@ namespace DataContext.Concrete
         public void Update(BaseEntity data)
         {
             _contextDb.Set<BaseEntity>().Update(data);
-            _contextDb.SaveChanges();
         }
     }
 }
