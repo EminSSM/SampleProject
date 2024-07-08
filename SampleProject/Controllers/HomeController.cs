@@ -1,3 +1,4 @@
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using SampleProject.Models;
 using System.Diagnostics;
@@ -13,20 +14,11 @@ namespace SampleProject.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(Register register)
         {
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    
     }
 }
