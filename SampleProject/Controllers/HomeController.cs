@@ -3,6 +3,8 @@ using Entities;
 using Microsoft.AspNetCore.Mvc;
 using SampleProject.Models;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SampleProject.Controllers
 {
@@ -24,15 +26,18 @@ namespace SampleProject.Controllers
         [HttpPost]
         public IActionResult Register(Register register)
         {
-            if (register != null)
+            if (ModelState.IsValid)
             {
+                // Þifreyi hashle
+                register.PasswordHash = HashPassword(register.PasswordHash);
+
+                // Veritabanýna kaydet
                 _entityRepository.Add(register);
+
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return View(register);
 
         }
         public IActionResult Login()
@@ -42,9 +47,9 @@ namespace SampleProject.Controllers
 		[HttpPost]
 		public IActionResult Login(string email, string pass)
 		{
-			// Kullanýcý doðrulama iþlemi
-			var user = _entityRepository.GetByData(u => u.Email == email && u.PasswordHash == pass);
-			if (user != null)
+            var hashedPassword = HashPassword(pass);
+            var user = _entityRepository.GetByData(u => u.Email == email && u.PasswordHash == hashedPassword);
+            if (user != null)
 			{
 				return RedirectToAction("Meeting");
 			}
@@ -54,8 +59,22 @@ namespace SampleProject.Controllers
 				return View();
 			}
 		}
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // Þifreyi hashledim
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-		public IActionResult Meeting()
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+        public IActionResult Meeting()
 		{
 			return View();
 		}
