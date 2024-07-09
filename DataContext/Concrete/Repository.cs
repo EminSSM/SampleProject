@@ -10,44 +10,51 @@ using System.Threading.Tasks;
 
 namespace DataContext.Concrete
 {
-    public class Repository : IRepository<BaseEntity> 
-    {
-        private readonly ContextDb _contextDb;
+	public class Repository<T> : IRepository<T> where T : BaseEntity
+	{
+		private readonly ContextDb _contextDb;
 
-        public Repository(ContextDb contextDb)
-        {
-            _contextDb = contextDb;
-        }
+		public Repository(ContextDb contextDb)
+		{
+			_contextDb = contextDb;
+		}
 
-        public void Add(BaseEntity data)
-        {
-            _contextDb.Add(data);
-        }
+		public void Add(T entity)
+		{
+			_contextDb.Set<T>().Add(entity);
+			_contextDb.SaveChanges();
+		}
 
-        public void Delete(int id)
-        {
-            var entity = GetByData(x=>x.Id==id);
-            _contextDb.Remove(entity);
-        }
+		public void Delete(int id)
+		{
+			var entity = GetByData(x => x.Id == id);
+			if (entity != null)
+			{
+				_contextDb.Set<T>().Remove(entity);
+				_contextDb.SaveChanges();
+			}
+		}
 
-        public void Delete(BaseEntity entity)
-        {
-            throw new NotImplementedException();
-        }
+		public void Delete(T entity)
+		{
+			_contextDb.Set<T>().Remove(entity);
+			_contextDb.SaveChanges();
+		}
 
-        public List<BaseEntity> GetAllDatas()
-        {
-            return _contextDb.Set<BaseEntity>().ToList();   
-        }
+		public List<T> GetAllDatas()
+		{
+			return _contextDb.Set<T>().ToList();
+		}
 
-        public BaseEntity GetByData(Expression<Func<BaseEntity, bool>> expression)
-        {
-            return _contextDb.Set<BaseEntity>().FirstOrDefault(expression);
-        }
+		public T GetByData(Expression<Func<T, bool>> expression)
+		{
+			return _contextDb.Set<T>().FirstOrDefault(expression);
+		}
 
-        public void Update(BaseEntity data)
-        {
-            _contextDb.Set<BaseEntity>().Update(data);
-        }
-    }
+		public void Update(T entity)
+		{
+			_contextDb.Set<T>().Update(entity);
+			_contextDb.SaveChanges();
+		}
+	}
 }

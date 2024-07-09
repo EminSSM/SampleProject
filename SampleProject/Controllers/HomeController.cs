@@ -9,17 +9,13 @@ namespace SampleProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IRepository<BaseEntity> _entityRepository;
-        public HomeController(ILogger<HomeController> logger, IRepository<BaseEntity> entityRepository)
+        private readonly IRepository<Register> _entityRepository;
+        public HomeController(ILogger<HomeController> logger, IRepository<Register> entityRepository)
         {
             _logger = logger;
             _entityRepository = entityRepository;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
         public IActionResult Register()
         {
             return View();
@@ -43,14 +39,27 @@ namespace SampleProject.Controllers
         {
             return View();
         }
+		[HttpPost]
+		public IActionResult Login(string email, string pass)
+		{
+			// Kullanýcý doðrulama iþlemi
+			var user = _entityRepository.GetByData(u => u.Email == email && u.PasswordHash == pass);
+			if (user != null)
+			{
+				return RedirectToAction("Meeting");
+			}
+			else
+			{
+				ViewBag.Error = "Geçersiz email veya þifre.";
+				return View();
+			}
+		}
 
-        [HttpPost]
-        public IActionResult Login(string username, string pass)
-        {
-            // Login iþlemlerini burada yap
-            return RedirectToAction("Index");
-        }
+		public IActionResult Meeting()
+		{
+			return View();
+		}
+	}
 
-
-    }
 }
+
