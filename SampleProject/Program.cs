@@ -2,13 +2,16 @@ using DataContext;
 using DataContext.Abstract;
 using DataContext.Concrete;
 using Entities;
+using SampleProject.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContextDb>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IEmailService, EMailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

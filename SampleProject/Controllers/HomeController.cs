@@ -1,6 +1,7 @@
 using DataContext.Abstract;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using SampleProject.Mail;
 using SampleProject.Models;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -12,13 +13,15 @@ namespace SampleProject.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository<Register> _entityRepository;
-        public HomeController(ILogger<HomeController> logger, IRepository<Register> entityRepository)
-        {
-            _logger = logger;
-            _entityRepository = entityRepository;
-        }
+		private readonly IEmailService _emailService;
+		public HomeController(ILogger<HomeController> logger, IRepository<Register> entityRepository, IEmailService emailService)
+		{
+			_logger = logger;
+			_entityRepository = entityRepository;
+			_emailService = emailService;
+		}
 
-        public IActionResult Register()
+		public IActionResult Register()
         {
             return View();
         }
@@ -34,7 +37,8 @@ namespace SampleProject.Controllers
                 // Veritabanýna kaydet
                 _entityRepository.Add(register);
 
-                return RedirectToAction("Index");
+				_emailService.SendWelcomeEmail(register.Email);
+				return RedirectToAction("Index");
             }
 
             return View(register);
