@@ -1,8 +1,68 @@
-﻿
+﻿@using Entities
+@model Meeting
 @{
     ViewData["Title"] = "Meeting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Meeting</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Contact us Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+        <div class="text">
+            Contact us Form
+        </div>
+        <form asp-controller="Home" asp-action="Meeting" method="post">
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" asp-for="@Model.Name" required>
+                    <div class="underline"></div>
+                    <label for="">Toplantı Adı</label>
+                </div>
+                <div class="input-data">
+                    <input type="datetime" asp-for="@Model.StartDate" required>
+                    <div class="underline"></div>
+                    <label for="">Başlangıç Tarihi</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="datetime" asp-for="@Model.EndDate" required>
+                    <div class="underline"></div>
+                    <label for="">Bitiş Tarihi</label>
+                </div>
+                <div class="input-data">
+                    <input type="text" asp-for="@Model.DocumentPath" required>
+                    <div class="underline"></div>
+                    <label for="">Döküman</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data textarea">
+                    <textarea rows="8" asp-for="@Model.Description" cols="80" required></textarea>
+                    <br />
+                    <div class="underline"></div>
+                    <label for="">Tanımlama</label>
+                    <br />
+                    <div class="form-row submit-btn">
+                        <div class="input-data">
+                            <div class="inner"></div>
+                            <input type="submit" value="submit">
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+    <!-- partial -->
+
+</body>
+</html>
 
