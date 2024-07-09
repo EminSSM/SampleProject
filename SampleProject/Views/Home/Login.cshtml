@@ -1,8 +1,7 @@
 ﻿@using Entities
-
 @model Register
 @{
-    ViewData["Title"] = "Kayıt Ol";
+    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,34 +15,18 @@
 					</span>
 				</div>
 
-				<form class="login100-form validate-form" asp-controller="Home" asp-action="Register" method="post">
-					<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
-						<span class="label-input100">Adınız</span>
-						<input class="input100" type="text" asp-for="@Model.FirstName" placeholder="Adınızı Giriniz">
+				<form class="login100-form validate-form" asp-controller="Home" asp-action="Login" method="post">
+					<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+						<span class="label-input100">Email</span>
+						<input class="input100" type="text" asp-for="@Model.Email" placeholder="Email Giriniz">
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-18" data-validate="LastName is required">
-						<span class="label-input100">Soyadınız</span>
-						<input class="input100" type="text" asp-for="@Model.LastName" placeholder="Soyadınızı Giriniz">
-						<span class="focus-input100"></span>
-					</div>
-					<div class="wrap-input100 validate-input m-b-18" data-validate="Email is required">
-						<span class="label-input100">Email</span>
-						<input class="input100" type="email" asp-for="@Model.Email" placeholder="Email Adresiniz">
-						<span class="focus-input100"></span>
-					</div>
 					<div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
 						<span class="label-input100">Şifre</span>
-						<input class="input100" type="password" asp-for="@Model.PasswordHash" placeholder="Şifre Giriniz">
+						<input class="input100" type="text" asp-for="@Model.PasswordHash" placeholder="Şifre Giriniz">
 						<span class="focus-input100"></span>
 					</div>
-					<div class="wrap-input100 validate-input m-b-18">
-						<span class="label-input100">Profil Fotoğrafı</span>
-						<input class="input100" type="text" asp-for="@Model.PasswordHash" placeholder="Profil Resminiz">
-						<span class="focus-input100"></span>
-					</div>
-
 
 					<div class="flex-sb-m w-full p-b-30">
 						<div class="contact100-form-checkbox">
@@ -52,10 +35,9 @@
 								Remember me
 							</label>
 						</div>
-
 						<div>
-							<a href="#" class="txt1">
-								Forgot Password?
+							<a href="/home/register" class="txt1">
+								Kayıt olmak için tıklayın
 							</a>
 						</div>
 					</div>

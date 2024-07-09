@@ -39,6 +39,17 @@ namespace SampleProject.Controllers
             }
 
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string username, string pass)
+        {
+            // Login iþlemlerini burada yap
+            return RedirectToAction("Index");
+        }
 
 
     }
