@@ -29,7 +29,7 @@ namespace Api.Controllers
 
 			if (user != null)
 			{
-				var token = TokenHandler.CreateToken(_configuration);
+				var token = TokenHandler.CreateToken(_configuration, user.Email);
 				return Ok(new { AccessToken = token.AccessToken, RefreshToken = token.RefreshToken, Expiration = token.Expiration });
 			}
 
@@ -47,10 +47,7 @@ namespace Api.Controllers
 		{
 			using (SHA256 sha256Hash = SHA256.Create())
 			{
-				// Compute hash.
 				byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-				// Convert byte array to a string.
 				StringBuilder builder = new StringBuilder();
 				for (int i = 0; i < bytes.Length; i++)
 				{
@@ -60,4 +57,10 @@ namespace Api.Controllers
 			}
 		}
 	}
+}
+
+public class LoginModel
+{
+	public string Email { get; set; }
+	public string Password { get; set; }
 }

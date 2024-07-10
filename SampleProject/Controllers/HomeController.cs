@@ -13,15 +13,17 @@ namespace SampleProject.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository<Register> _entityRepository;
+        private readonly IRepository<Meeting> _meetingRepository;
 		private readonly IEmailService _emailService;
-		public HomeController(ILogger<HomeController> logger, IRepository<Register> entityRepository, IEmailService emailService)
-		{
-			_logger = logger;
-			_entityRepository = entityRepository;
-			_emailService = emailService;
-		}
+        public HomeController(ILogger<HomeController> logger, IRepository<Register> entityRepository, IEmailService emailService, IRepository<Meeting> meetingRepository)
+        {
+            _logger = logger;
+            _entityRepository = entityRepository;
+            _emailService = emailService;
+            _meetingRepository = meetingRepository;
+        }
 
-		public IActionResult Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -82,7 +84,20 @@ namespace SampleProject.Controllers
 		{
 			return View();
 		}
-	}
+
+        [HttpPost]
+        public IActionResult Meeting(Meeting meeting)
+        {
+            if (ModelState.IsValid)
+            {
+                _meetingRepository.Add(meeting);
+
+                return RedirectToAction("Meeting");
+            }
+
+            return View(meeting);
+        }
+    }
 
 }
 

@@ -9,16 +9,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CodePen - Contact us Form</title>
+    <title>TOPLANTI OLUŞTURMA FORMU</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
-    <!-- partial:index.partial.html -->
     <div class="container">
         <div class="text">
-            Contact us Form
+            TOPLANTI FORMU
         </div>
         <form asp-controller="Home" asp-action="Meeting" method="post">
             <div class="form-row">
@@ -27,18 +26,18 @@
                     <div class="underline"></div>
                     <label for="">Toplantı Adı</label>
                 </div>
+                <br />
                 <div class="input-data">
-                    <input type="datetime" asp-for="@Model.StartDate" required>
-                    <div class="underline"></div>
-                    <label for="">Başlangıç Tarihi</label>
+                    <span>Toplantı Başlangıç Tarihi</span>
+                    <input type="datetime-local" asp-for="@Model.StartDate" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-data">
-                    <input type="datetime" asp-for="@Model.EndDate" required>
-                    <div class="underline"></div>
-                    <label for="">Bitiş Tarihi</label>
+                    <span class="red">Toplantı Bitiş Tarihi</span>
+                    <input type="datetime-local" asp-for="@Model.EndDate" required>
                 </div>
+                <br />
                 <div class="input-data">
                     <input type="text" asp-for="@Model.DocumentPath" required>
                     <div class="underline"></div>
@@ -50,7 +49,7 @@
                     <textarea rows="8" asp-for="@Model.Description" cols="80" required></textarea>
                     <br />
                     <div class="underline"></div>
-                    <label for="">Tanımlama</label>
+                    <label for="">Açıklama</label>
                     <br />
                     <div class="form-row submit-btn">
                         <div class="input-data">
@@ -59,10 +58,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
-    <!-- partial -->
-
 </body>
 </html>
 
