@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using Entities;
+using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
@@ -51,6 +52,34 @@ namespace SampleProject.Mail
 
 			await smptClient.SendMailAsync(mailMessage);
 		}
-	}
+
+        public async Task SendMeetingDetailsEmail(string toEmail, Meeting meeting)
+        {
+            var smtpClient = new System.Net.Mail.SmtpClient
+            {
+                Host = _emailSettings.Host,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Port = _emailSettings.Port,
+                Credentials = new NetworkCredential(_emailSettings.Email, _emailSettings.Password),
+                EnableSsl = _emailSettings.EnableSsl
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(_emailSettings.Email, "DemoProje"),
+                Subject = "Toplantı Bilgileri",
+                Body = $@"
+                    <h3>Toplantı Bilgileri</h3>
+                    <p><strong>Toplantı Adı:</strong> {meeting.Name}</p>
+                    <p><strong>Başlangıç Tarihi:</strong> {meeting.StartDate}</p>
+                    <p><strong>Bitiş Tarihi:</strong> {meeting.EndDate}</p>",
+                IsBodyHtml = true
+            };
+
+            mailMessage.To.Add(toEmail);
+            await smtpClient.SendMailAsync(mailMessage);
+        }
+    }
 }
 
