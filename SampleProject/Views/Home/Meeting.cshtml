@@ -1,7 +1,7 @@
 ﻿@using Entities
 @model Meeting
 @{
-    ViewData["Title"] = "Meeting";
+    ViewData["Title"] = "Toplantı";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,18 +23,18 @@
             <div class="form-row">
                 <div class="input-data">
                     <span>Toplantı Adı</span>
-                    <input type="text" asp-for="@Model.Name" required>
+                    <input type="text" id="meetingName" asp-for="@Model.Name" required>
                 </div>
                 <br />
                 <div class="input-data">
                     <span>Toplantı Başlangıç Tarihi</span>
-                    <input type="datetime-local" asp-for="@Model.StartDate" required>
+                    <input type="datetime-local" id="startDate" asp-for="@Model.StartDate" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-data">
                     <span class="red">Toplantı Bitiş Tarihi</span>
-                    <input type="datetime-local" asp-for="@Model.EndDate" required>
+                    <input type="datetime-local" id="endDate" asp-for="@Model.EndDate" required>
                 </div>
                 <br />
                 <br />
@@ -46,13 +46,23 @@
             <div class="form-row">
                 <div class="input-data textarea">
                     <span>Açıklama Ekle</span>
-                    <textarea rows="8" asp-for="@Model.Description" cols="80" required></textarea>
+                    <textarea rows="8" id="description" asp-for="@Model.Description" cols="80" required></textarea>
                     <br />
-                    <div class="form-row submit-btn">
-                        <div class="input-data">
-                            <div class="inner"></div>
-                            <input type="submit" value="Gönder">
-                        </div>
+                    
+                    <br />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-row submit-btn" style="width: 350px;">
+                    <div class="input-data">
+                        <div class="inner"></div>
+                        <input type="submit" value="Gönder">
+                    </div>
+                </div>
+                <div class="form-row submit-btn" style="width: 350px;">
+                    <div class="input-data">
+                        <div class="inner"></div>
+                        <input onclick="showAndPrint()" value="Yazdır">
                     </div>
                 </div>
             </div>
@@ -60,4 +70,46 @@
     </div>
 </body>
 </html>
+
+<script type="text/javascript">
+    function showAndPrint() {
+        var meetingName = document.getElementById("meetingName").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        var description = document.getElementById("description").value;
+
+
+        var printContent = `
+                <div>
+                <br>
+                    <h1>Toplantı Bilgileri</h1>
+                    <br>
+                    <h5>Toplantı Adı: ${meetingName}</h5>
+                     <br>
+                    <h5>Toplantı Başlangıç : ${startDate}</h5>
+                     <br>
+                    <h5>Toplantı Bitiş : ${endDate}</h5>
+                     <br>
+                    <h5>Toplantının Açıklaması : ${description}</h5>
+                </div>
+            `;
+
+        var printDiv = document.createElement("div");
+        printDiv.id = "printDiv";
+        printDiv.style.display = "none";
+        printDiv.innerHTML = printContent;
+        document.body.appendChild(printDiv);
+
+        var printContents = document.getElementById("printDiv").innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+        document.body.removeChild(printDiv);
+    }
+</script>
 
