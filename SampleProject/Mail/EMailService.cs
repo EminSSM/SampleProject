@@ -44,7 +44,7 @@ namespace SampleProject.Mail
 			mailMessage.Subject = "Hoş Geldiniz";
 			mailMessage.Body = @$"
             <h3>Merhaba,</h3>
-            <p>hoş geldiniz!</p>
+            <p>Hoş geldiniz!</p>
             <p>Sizlerle birlikte daha güzel işler başaracağımıza inanıyoruz.</p>
             <p>Teşekkür ederiz.</p>";
 
