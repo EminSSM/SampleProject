@@ -1,7 +1,10 @@
+using Azure;
 using DataContext.Abstract;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SampleProject.Mail;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,11 +15,13 @@ namespace SampleProject.Controllers
         private readonly IRepository<Register> _entityRepository;
         private readonly IRepository<Meeting> _meetingRepository;
         private readonly IEmailService _emailService;
-        public HomeController(IRepository<Register> entityRepository, IEmailService emailService, IRepository<Meeting> meetingRepository)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public HomeController(IRepository<Register> entityRepository, IEmailService emailService, IRepository<Meeting> meetingRepository, IHttpClientFactory httpClientFactory)
         {
             _entityRepository = entityRepository;
             _emailService = emailService;
             _meetingRepository = meetingRepository;
+            _httpClientFactory = httpClientFactory;
         }
 
         public IActionResult Register()
@@ -58,13 +63,24 @@ namespace SampleProject.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string email, string pass)
+        public async Task<IActionResult> Login(string email, string pass)
         {
             var hashedPassword = HashPassword(pass);
             var user = _entityRepository.GetByData(u => u.Email == email && u.PasswordHash == hashedPassword);
             if (user != null)
             {
                 HttpContext.Session.SetString("UserEmail", user.Email);
+                var client = _httpClientFactory.CreateClient();
+                var Request = new LoginModel();
+                Request.Email = user.Email;
+                Request.Password = user.PasswordHash;
+                var jsonData = JsonConvert.SerializeObject(Request);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                var responsemessage = await client.PostAsync("https://localhost:44343/api/Login/authenticate", content);
+
+                var jsonString = await responsemessage.Content.ReadAsStringAsync();
+                var TokenResponse = JsonConvert.DeserializeObject<TokenResponse>(jsonString);
+                //token 'ý alýyorum ancak kullanýmýný yetiþtirmediðim için http isteklerinde kullanamýyorum.
                 return RedirectToAction("Meeting");
             }
             else
@@ -125,5 +141,16 @@ namespace SampleProject.Controllers
 
             return View(meeting);
         }
+    }
+    public class LoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+    public class TokenResponse
+    {
+        public string accessToken { get; set; }
+        public string refreshToken { get; set; }
+        public DateTime expiration { get; set; }
     }
 }

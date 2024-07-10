@@ -103,13 +103,18 @@
         var printContents = document.getElementById("printDiv").innerHTML;
         var originalContents = document.body.innerHTML;
 
-        document.body.innerHTML = printContents;
+       // document.body.innerHTML = printContents;
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write(printContent);
+        printWindow.document.close();
 
-        window.print();
+        printWindow.focus();
+        printWindow.print();
 
-        document.body.innerHTML = originalContents;
+        // document.body.innerHTML = originalContents;
 
-        document.body.removeChild(printDiv);
+         document.body.removeChild(printDiv);
     }
 </script>
 
