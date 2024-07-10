@@ -10,18 +10,18 @@
         <div class="wrap-login100">
             <div class="login100-form-title" style="background-image: url(images/bg-01.jpg);">
                 <span class="login100-form-title-1">
-                    Sign In
+                    Giriş Ekranı
                 </span>
             </div>
 
             <form class="login100-form validate-form" asp-controller="Home" asp-action="Login" method="post">
-                <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
+                <div class="wrap-input100 validate-input m-b-26" data-validate="Email Bilgisi Zorunlu">
                     <span class="label-input100">Email</span>
                     <input class="input100" type="text" name="email" placeholder="Email Giriniz">
                     <span class="focus-input100"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Şifre Bilgisi Zorunlu">
                     <span class="label-input100">Şifre</span>
                     <input class="input100" type="password" name="pass" placeholder="Şifre Giriniz">
                     <span class="focus-input100"></span>
@@ -40,7 +40,7 @@
 
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn">
-                        Login
+                        Giriş Yap
                     </button>
                 </div>
                 @if (ViewBag.Error != null)
@@ -54,19 +54,12 @@
     </div>
 </div>
 
-<!--===============================================================================================-->
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
 <script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
 <script src="vendor/bootstrap/js/popper.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
 <script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
 <script src="vendor/daterangepicker/moment.min.js"></script>
 <script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
 <script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
 <script src="js/main.js"></script>

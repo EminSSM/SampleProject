@@ -19,12 +19,11 @@
         <div class="text">
             TOPLANTI FORMU
         </div>
-        <form asp-controller="Home" asp-action="Meeting" method="post">
+        <form asp-controller="Home" asp-action="Meeting" method="post" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="input-data">
+                    <span>Toplantı Adı</span>
                     <input type="text" asp-for="@Model.Name" required>
-                    <div class="underline"></div>
-                    <label for="">Toplantı Adı</label>
                 </div>
                 <br />
                 <div class="input-data">
@@ -38,23 +37,21 @@
                     <input type="datetime-local" asp-for="@Model.EndDate" required>
                 </div>
                 <br />
+                <br />
                 <div class="input-data">
-                    <input type="text" asp-for="@Model.DocumentPath" required>
-                    <div class="underline"></div>
-                    <label for="">Döküman</label>
+                    <span>Döküman Yükle</span>
+                    <input type="file" name="document">
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-data textarea">
+                    <span>Açıklama Ekle</span>
                     <textarea rows="8" asp-for="@Model.Description" cols="80" required></textarea>
-                    <br />
-                    <div class="underline"></div>
-                    <label for="">Açıklama</label>
                     <br />
                     <div class="form-row submit-btn">
                         <div class="input-data">
                             <div class="inner"></div>
-                            <input type="submit" value="submit">
+                            <input type="submit" value="Gönder">
                         </div>
                     </div>
                 </div>
